@@ -1,0 +1,19 @@
+<h1>List of boxers:</h1>
+<table>
+        <tr>
+            <th>Name</th>
+            <th>Record</th>
+            <th>Division</th>
+            <th>Residence</th>
+
+        </tr>
+    {{!-- {{Iterate through each boxer object and display to webpage}} --}}
+    {{#each createdBoxers}}
+        <tr>
+            <td>{{this.name}}</td>
+            <td>{{this.boxingrecord}}</td>
+            <td>{{this.division}}</td>
+            <td>{{this.residence}}</td>
+        </tr>
+    {{/each}}
+</table>
