@@ -10,7 +10,7 @@ router.post('/', function(req, res, next) {
     boxer.name = req.body.name;
     boxer.boxingrecord = req.body.boxingrecord;
     boxer.division = req.body.division;
-    boxer.password = req.body.residence; //WHY?? 
+    boxer.residence = req.body.residence; //WHY?? 
   
     //outputting boxer to console to verify that boxer was created
     console.log(boxer);
