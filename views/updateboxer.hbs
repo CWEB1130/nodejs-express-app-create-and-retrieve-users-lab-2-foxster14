@@ -1,0 +1,28 @@
+<h1>Update Existing Boxer Record:</h1><br>
+<form action="/updatecomplete" method="POST">
+    <label>Select which item to update:</label><br>
+    <select name="changing_attr">
+        <option value="name">Name</option>
+        <option value="boxingrecord">Boxing Record</option>
+        <option value="division">Division</option>
+        <option value="residence">Residence</option>
+    </select><br><br>
+    <label>What is the ID number of the boxer you wish to update?</label><br>
+    <input type="text" name="id_number" class="form-control" placeholder="01" size="20"><br>
+    <label>Please enter what the new value of the record should be:</label><br>
+    <input type="text" name="new_value" class="form-control" placeholder="Enter the new value" size="20"><br>
+    <input type="submit" class="btn btn-primary" value="Submit">
+</form>
+
+
+
+<!--
+<h1>Boxer Entry Form:</h1>
+<form action="/updatedboxer" method="POST">
+    <input type="text"  name="name" class="form-control" placeholder="Name (ex. Lennox)" size="40"><br>
+    <input type="text"  name="boxingrecord" class="form-control" placeholder="Boxing record (10-1-2)" size="40"><br>
+    <input type="text"  name="division" class="form-control" placeholder="Enter division(ex. Heavy)" size="40"><br>
+    <input type="text" name="residence" class="form-control" placeholder="Enter Residence" size="40"><br>
+    <input type="submit" class="btn btn-primary" value="submit">
+</form>
+-->
