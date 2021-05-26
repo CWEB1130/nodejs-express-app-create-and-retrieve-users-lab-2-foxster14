@@ -3,58 +3,78 @@ var router = express.Router();
 var fs = require('fs');
 var boxer = require('../model/boxerstructure.js');
 
+function jsonReader(filePath, cb) {
+    fs.readFile(filePath, (err, fileData) => {
+        if (err) {
+            return cb && cb(err)
+        }
+        try {
+            const object = JSON.parse(fileData)
+            return cb && cb(null, object)
+        } catch(err) {
+            return cb && cb(err)
+        }
+    })
+}
+
+
 /* Create Boxer */
 router.post('/', function(req, res, next) {
 
     //testing
     console.log(req.body.changing_attr);
     console.log(req.body.new_value);
+    console.log(req.body.id_number);
+    var updatedBoxer;
 
-    function jsonReader(filePath, cb) {
-        fs.readFile(filePath, (err, fileData) => {
-            if (err) {
-                return cb && cb(err)
-            }
-            try {
-                const object = JSON.parse(fileData)
-                return cb && cb(null, object)
-            } catch(err) {
-                return cb && cb(err)
-            }
-        })
-    }
 
-    jsonReader('./boxers.json', (err, originalboxer) => {
+    var boxerRecords = jsonReader('./boxers.json', (err, originalboxer) => {
         if (err) {
             console.log('Error reading file:',err)
             return
         }
+    
+   
 
     //if (req.body.changing_attr == null){
         //console.log('Error, need to select from drop down')
     //}else {
-    if (originalboxer.id == req.body.idnumber){
-            if (req.body.changing_attr == "name"){
-                originalboxer.name = req.body.new_value
-            }if (req.body.changing_attr == "boxingrecord"){
-                originalboxer.boxingrecord = req.body.new_value
-            }if (req.body.changing_attr == "division"){
-                originalboxer.division = req.body.new_value
-            }if (req.body.changing_attr == "residence"){
-                originalboxer.residence = req.body.new_value
-            }
-    };
+
+   for(var x=0; x < originalboxer.length; x++){
+        if (originalboxer[x].id == req.body.id_number){
+                if (req.body.changing_attr == "name"){
+                    originalboxer[x].name = req.body.new_value
+                }
+                if (req.body.changing_attr == "boxingrecord"){
+                    originalboxer[x].boxingrecord = req.body.new_value
+                }
+                if (req.body.changing_attr == "division"){
+                    originalboxer[x].division = req.body.new_value
+                
+                }if (req.body.changing_attr == "residence"){
+                    originalboxer[x].residence = req.body.new_value
+                }
+                updatedBoxer = originalboxer[x];
+                x = originalboxer.length;
+
+              
+        }
+    }
     
   
-    //outputting boxer to console to verify that boxer was created
-    console.log(boxer);
-    console.log(originalboxer);
+    //outputting boxer to console to verify that boxer was created.
+    console.log(updatedBoxer);
+    //Render the new boxer object to display view
+    res.render('updatecomplete', updatedBoxer);
 
     
     fs.writeFileSync('./boxers.json', JSON.stringify(originalboxer), (err) => {
             if (err) console.log('Error writing file:', err)
         })
     })
+
+    //Render the new boxer object to display view
+    //res.render('updatecomplete', {updatedBoxer})
   
     //reading boxers from boxers.json file and assigning user to boxerData variable
     //readFileSynx is a synchronous way to read a file, which is what we need in this case
@@ -81,7 +101,7 @@ router.post('/', function(req, res, next) {
     })*/
   
     //Render the new boxer object to display view
-    res.render('display', originalboxer)
+    //res.render('updatecomplete', updatedBoxer)
   });
 
 module.exports = router;
